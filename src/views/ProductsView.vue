@@ -30,7 +30,7 @@
             </button>
             <button type="button" class="btn btn-outline-danger" @click="add2CartSingle(product.id)"
             :disabled="isLoading===product.id">
-              <i class="fas fa-pulse" :class="{'fas fa-spinner':isLoading===product.id}"></i>
+              <i class="fas fa-pulse" :class="{'fa-spinner':isLoading===product.id}"></i>
               加到購物車
             </button>
           </div>
@@ -39,9 +39,11 @@
     </tbody>
   </table>
     </div>
+    <ProductDetail ref="pmodal" :selected="selectedItem"></ProductDetail>
 </template>
 
 <script>
+import ProductDetail from '@/components/ProductDetail.vue'
 export default {
   data () {
     return {
@@ -51,7 +53,9 @@ export default {
       isLoading: ''
     }
   },
-
+  components: {
+    ProductDetail
+  },
   methods: {
     getProduct () {
       this.$http.get(`${process.env.VUE_APP_API}/api/${process.env.VUE_APP_PATH}/products/all`)
@@ -63,7 +67,8 @@ export default {
 
     selected (item) {
       this.selectedItem = item
-      // emitter.emit('sendProduct',this.selectedItem); //To productdetails.js
+      console.log(this.selectedItem)
+      this.$refs.pmodal.modalShow()
     },
 
     add2CartSingle (idIn) {
@@ -78,7 +83,7 @@ export default {
           this.$http.post(`${process.env.VUE_APP_API}/api/${process.env.VUE_APP_PATH}/cart`, { data })
             .then((res) => {
               console.log(res)
-              // loadCart.emit('loadCart',this.selectedItem) //to cart.js for refreshing the cart
+              // loadCart.emit('loadCart', this.selectedItem) // to cart.js for refreshing the cart
               this.isLoading = ''
             })
             .catch((error) => { console.dir(error) })

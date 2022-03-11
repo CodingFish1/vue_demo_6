@@ -1,7 +1,7 @@
 <template>
 <FrontBar></FrontBar>
 <router-view></router-view>
-</template>>
+</template>
 
 <script>
 import FrontBar from '@/components/FrontBar.vue'

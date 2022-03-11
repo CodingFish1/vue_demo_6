@@ -4,12 +4,8 @@ const routes = [
   {
     path: '/',
     component: () => import('../views/FrontView.vue'),
+    redirect: 'products',
     children: [
-      {
-        path: '/',
-        name: 'home',
-        component: () => import('../views/HomeView.vue')
-      },
       {
         path: 'products',
         component: () => import('../views/ProductsView.vue')

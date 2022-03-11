@@ -56,9 +56,11 @@
     </tfoot>
   </table>
     </div>
+  <FormBody v-on:ref-cart='getCart' :cart="cart"></FormBody>
 </template>
 
 <script>
+import FormBody from '@/components/FormBody.vue'
 export default {
   data () {
     return {
@@ -67,13 +69,16 @@ export default {
       isDeleting: ''
     }
   },
+  components: {
+    FormBody
+  },
 
   methods: {
     getCart () {
       this.$http.get(`${process.env.VUE_APP_API}/api/${process.env.VUE_APP_PATH}/cart`)
         .then((res) => {
           this.cart = res.data.data.carts
-          // cartInfo.emit('cartInfo',this.cart)
+          console.log('Cart Loaded')
         })
         .catch((error) => { console.dir(error) })
     },
@@ -117,12 +122,5 @@ export default {
   mounted () {
     this.getCart()
   }
-
-//     created(){
-//     //   loadCart.on('loadCart',(data)=>{ //from productlist.js
-//         console.log(data);
-//         this.getCart();
-//       })
-//   },
 }
 </script>
